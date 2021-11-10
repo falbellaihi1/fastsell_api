@@ -35,8 +35,8 @@ class productMain(BaseModel):
 class update_stylist(productMain):
     name: Optional[str] = ""
     description: Optional[str] = ""
-    type_product: Optional[List[type_of_product]] = None
-    city: Optional[List[city_list]] = None
+    type_product: Optional[List[type_of_product]] = [""]
+    city: Optional[List[city_list]] = [""]
     range_price: Optional[str] = ""
     # id: int
     # name: str
