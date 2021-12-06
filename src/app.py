@@ -3,16 +3,14 @@ from typing import Optional
 from fastapi import Depends, FastAPI, HTTPException, Request
 from sqlalchemy.orm import Session
 # import crud
-from seller import models as sellerModels
 from products import models as productModels
 from products import schemas as productSchema
-from seller import schemas as sellerSchema
+
 from products import crud as productCrud
-from seller import crud as sellerCrud
+
 # from auth.auth import requires_auth
 from database import SessionLocal, engine
 
-sellerModels.Base.metadata.create_all(bind=engine)
 productModels.Base.metadata.create_all(bind=engine)
 
 
@@ -27,33 +25,24 @@ def get_db():
         db.close()
 
 
-@app.get("/seller/name", response_model=sellerSchema.sellerBaselongResponse)
+
+
+
+# @app.get("/product/name", response_model=productSchema.ProductBaselongResponse)
+# # @requires_auth('read:stylist')
+# def get_seller_by_name(product: str, db: Session = Depends(get_db)):
+#     print('this is payload')
+#     return productCrud.get_product_by_name(db, product_name=product)
+
+@app.get("/product/all")
 # @requires_auth('read:stylist')
-def get_seller_by_name(seller: str, db: Session = Depends(get_db)):
+def get_products_all(db: Session = Depends(get_db)):
     print('this is payload')
-    return sellerCrud.get_seller_by_name(db,seller_name= seller)
-
-@app.post("/seller/", response_model=sellerSchema.sellerMain)
-def create_stylist(seller: sellerSchema.sellerMain,
-                   db: Session = Depends(get_db)):
-    db_seller = sellerCrud.create_seller(db, seller=seller)
-    if db_seller:
-        raise HTTPException(status_code=400,
-                            detail="seller already registered")
-    return db_seller
+    return productCrud.get_products(db)
 
 
-
-
-@app.get("/product/name", response_model=productSchema.ProductBaselongResponse)
-# @requires_auth('read:stylist')
-def get_seller_by_name(product: str, db: Session = Depends(get_db)):
-    print('this is payload')
-    return productCrud.get_product_by_name(db, product_name=product)
-
-
-@app.post("/product/create", response_model=productSchema.productMain)
-def create_stylist(product: productSchema.productMain,
+@app.post("/product/create", response_model=productSchema.Product)
+def create_product(product: productSchema.Product,
                    db: Session = Depends(get_db)):
     db_product = productCrud.create_product(db, product=product)
     # if db_product:

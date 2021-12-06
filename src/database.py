@@ -6,7 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 load_dotenv(find_dotenv())
 #SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_app.db"
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:0000@localhost/fastselldb"#os.getenv("DATABASE_URL")
+SQLALCHEMY_DATABASE_URL = "postgresql://postgres:0000@localhost/allproducts"#os.getenv("DATABASE_URL")
 print(SQLALCHEMY_DATABASE_URL)
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL

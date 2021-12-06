@@ -1,4 +1,5 @@
 from typing import List, Optional
+from datetime import datetime
 from enum import Enum
 from pydantic import BaseModel
 
@@ -20,55 +21,94 @@ class Rate(BaseModel):
         orm_mode = True
 
 
-class productMain(BaseModel):
-    name: Optional[str] = ""
-    image:Optional[str]=""
-    description: Optional[str] = ""
-    type_product: Optional[List[type_of_product]] = None
-    location: Optional[List[city_list]] = None
-    range_price: Optional[str] = ""
+class Product(BaseModel):
+    id: int
+    seller_id: int
+    SKU: str
+    product_name: str
+    product_description: str
+    category_id: int
+    quantity: int
+    unit_price: float
+    MSRP: float
+    color: str
+    size: str
+    unit_weight: float
+    units_in_stock: int
+    discounts_available: bool
+    pictures: List
 
     class Config:
         orm_mode = True
 
 
-class update_stylist(productMain):
-    name: Optional[str] = ""
-    description: Optional[str] = ""
-    type_product: Optional[List[type_of_product]] = [""]
-    city: Optional[List[city_list]] = [""]
-    range_price: Optional[str] = ""
-    # id: int
-    # name: str
-    # experience: int
-    # certificates: str
-    # does_training: bool
-    # bio: str
-    # type_artist: List[type_art]
-    # city:str
-    # can_travel:bool
-    # range_price:str
-
-
-class get_product(str):
+class Seller(BaseModel):
+    id: int
+    seller_sub: str
     name: str
+    company_name: str
+    contact_name: str
+    address: str
+    city: str
+    postal_code: str
+    phone: str
+    logo: str
 
 
-class ProductBaselongResponse(productMain):
-    name: Optional[str] = ""
-    description: Optional[str] = ""
-    type_product: Optional[List[type_of_product]] = None
-    city: Optional[List[city_list]] = None
-    range_price: Optional[str] = ""
+class Category(BaseModel):
+    id: int
+    category_name: str
+    description: str
+    picture: str
+    category_header_picture: str
+    is_active: bool
 
-    # name: str =""
-    # experience: int =0
-    # certificates: str =""
-    # does_training: bool =False
-    # bio: str =""
-    # type_artist: List[type_art]=None
-    # city:str =""
-    # can_travel:bool=False
-    # range_price:str =""
-    class Config:
-        orm_mode = True
+
+class DeliverDriver(BaseModel):
+    id: int
+    driver_gov_id_type: str
+    driver_gov_id: str
+    driver_name: str
+    driver_phone: str
+
+
+class OrderDetails(BaseModel):
+    id = int
+    order_id: int
+    product_id: int
+    # order_number = Column(Integer, index=True)
+    price: int
+    quantity: int
+    total: int
+    color: str
+    purchase_date: datetime
+
+
+class Orders(BaseModel):
+    id: int
+    buyer_id: int
+    payment_id: int
+    driver_id: int
+    purchase_date: datetime
+    price: int
+    quantity: int
+    total: int
+    color: int
+    payment_date: datetime
+
+
+class Payment(BaseModel):
+    payment_id: int
+    payment_type: str
+    allowed: bool
+
+
+class Buyer(BaseModel):
+    id: int
+    first_name: str
+    last_name: str
+    address: str
+    city: str
+    postal_code: str
+    phone: str
+    user_sub: str
