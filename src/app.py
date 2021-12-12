@@ -7,12 +7,12 @@ from products import models as productModels
 from products import schemas as productSchema
 
 from products import crud as productCrud
+from vehicles import crud as vehicleCrud
 
 # from auth.auth import requires_auth
 from database import SessionLocal, engine
 
 productModels.Base.metadata.create_all(bind=engine)
-
 
 app = FastAPI(title="fastsell")
 
@@ -23,9 +23,6 @@ def get_db():
         yield db
     finally:
         db.close()
-
-
-
 
 
 # @app.get("/product/name", response_model=productSchema.ProductBaselongResponse)
@@ -39,6 +36,27 @@ def get_db():
 def get_products_all(db: Session = Depends(get_db)):
     print('this is payload')
     return productCrud.get_products(db)
+
+
+@app.get("/vehicle/make")
+# @requires_auth('read:stylist')
+def get_vehicle_make(db: Session = Depends(get_db)):
+    print('this is payload')
+    return vehicleCrud.get_make(db)
+
+
+@app.get("/vehicle/model/{make_id}")
+# @requires_auth('read:stylist')
+def get_vehicle_model(make_id: int, db: Session = Depends(get_db)):
+    print('this is payload')
+    return vehicleCrud.get_model(db, make_id=make_id)
+
+
+@app.get("/vehicle/year/{model_id}")
+# @requires_auth('read:stylist')
+def get_vehicle_model(model_id: int, db: Session = Depends(get_db)):
+    print('this is payload')
+    return vehicleCrud.get_year(db, model_id=model_id)
 
 
 @app.post("/product/create", response_model=productSchema.Product)
