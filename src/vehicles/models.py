@@ -32,3 +32,7 @@ class Year(Base):
 class Trim(Base):
     __tablename__ = "trim"
     id = Column(Integer, primary_key=True, index=True)
+    car_model_id = Column(Integer, ForeignKey('model.id'))
+    car_make_id = Column(Integer, ForeignKey('make.id'))
+    name = Column(String)
+    car_year = Column(String)
