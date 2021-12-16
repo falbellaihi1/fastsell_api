@@ -26,4 +26,11 @@ class Year(BaseModel):
     class Config:
         orm_mode = True
 
+class Tirm(BaseModel):
+    id:int
+    car_model_id:int
+    car_make_id:int
+    name:str
+    car_year:str
+
 

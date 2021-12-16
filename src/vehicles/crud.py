@@ -43,11 +43,15 @@ def get_make(db: Session, skip: int = 0, limit: int = 100):
 
 
 def get_model(db: Session, make_id=int):
-    return db.query(models.Model).filter(models.Make.id== make_id).all()
+    return db.query(models.Model).filter(models.Make.id == make_id).all()
 
 
 def get_year(db: Session, model_id=int):
     return db.query(models.Year).filter(models.Model.id == model_id).all()
+
+
+def get_trim(db: Session, model_id=int):
+    db.query(models.Trim).filter(models.Model.id == model_id).all()
 
 # def update_stylist(db: Session, stylist_id:int ,stylist: schemas.StylistMain):
 #     db_stylist = db.query(models.Stylist).filter(models.Stylist.id ==stylist_id ).first()
